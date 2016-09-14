@@ -1,0 +1,6 @@
+E:\Server\Server Control\Photon-OnPremise-Server-SDK_v4-0-29-11263\deploy\Server\bin\PhotonServer.dll
+E:\Server\Server Control\Photon-OnPremise-Server-SDK_v4-0-29-11263\deploy\Server\bin\PhotonServer.pdb
+E:\Server\Server Control\Photon-OnPremise-Server-SDK_v4-0-29-11263\PhotonServer\PhotonServer\obj\Debug\PhotonServer.csprojResolveAssemblyReference.cache
+E:\Server\Server Control\Photon-OnPremise-Server-SDK_v4-0-29-11263\PhotonServer\PhotonServer\obj\Debug\PhotonServer.dll
+E:\Server\Server Control\Photon-OnPremise-Server-SDK_v4-0-29-11263\PhotonServer\PhotonServer\obj\Debug\PhotonServer.pdb
+E:\Server\Server Control\Photon-OnPremise-Server-SDK_v4-0-29-11263\deploy\Server\bin\log4net.config
