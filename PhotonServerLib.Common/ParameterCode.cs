@@ -7,6 +7,7 @@ namespace PhotonServerLib.Common
 {
     public enum ParameterCode : byte
     {
-        CharacterName
+        CharacterName,
+        ChatMessage
     }
 }

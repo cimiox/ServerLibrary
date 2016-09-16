@@ -7,5 +7,6 @@ namespace PhotonServerLib.Common
 {
     public enum EventCode : byte
     {
+        ChatMessage
     }
 }

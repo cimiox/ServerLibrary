@@ -7,6 +7,8 @@ namespace PhotonServerLib.Common
 {
     public enum OperationCode : byte
     {
-        Login
+        Login,
+        GetRecentChatMessages,
+        SendChatMessage
     }
 }

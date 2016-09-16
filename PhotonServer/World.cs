@@ -13,7 +13,7 @@ namespace PhotonServer
     {
         public static readonly World Instance = new World();
 
-        private List<Client> Clients { get; set; }
+        public List<Client> Clients { get; private set; }
 
         private readonly ReaderWriterLockSlim readWriteLock;
 
@@ -21,6 +21,14 @@ namespace PhotonServer
         {
             Clients = new List<Client>();
             readWriteLock = new ReaderWriterLockSlim();
+        }
+
+        public Client TryGetByName(string name)
+        {
+            using (ReadLock.TryEnter(this.readWriteLock, 1000))
+            {
+                return Clients.Find(n => n.CharacterName.Equals(name));
+            }
         }
 
         public bool IsContain(string name)
