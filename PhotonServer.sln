@@ -5,6 +5,10 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotonServer", "PhotonServer\PhotonServer.csproj", "{A2B9AA13-0C73-4EC3-A5B3-1D73DDB41F99}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PhotonServerLib.Common", "PhotonServerLib.Common\PhotonServerLib.Common.csproj", "{4314E3B4-1C2B-4D7B-B1C1-855FEC0D72FE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goblin Survival.CSharp", "..\..\..\..\GoblinSurvival\Goblin Survival\Goblin Survival.CSharp.csproj", "{F78D7D25-5835-7FE1-FF22-B2765C90A105}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{A2B9AA13-0C73-4EC3-A5B3-1D73DDB41F99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A2B9AA13-0C73-4EC3-A5B3-1D73DDB41F99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A2B9AA13-0C73-4EC3-A5B3-1D73DDB41F99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4314E3B4-1C2B-4D7B-B1C1-855FEC0D72FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4314E3B4-1C2B-4D7B-B1C1-855FEC0D72FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4314E3B4-1C2B-4D7B-B1C1-855FEC0D72FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4314E3B4-1C2B-4D7B-B1C1-855FEC0D72FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F78D7D25-5835-7FE1-FF22-B2765C90A105}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F78D7D25-5835-7FE1-FF22-B2765C90A105}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F78D7D25-5835-7FE1-FF22-B2765C90A105}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F78D7D25-5835-7FE1-FF22-B2765C90A105}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

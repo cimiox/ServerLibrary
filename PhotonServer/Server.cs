@@ -2,6 +2,7 @@
 using ExitGames.Logging.Log4Net;
 using log4net.Config;
 using Photon.SocketServer;
+using PhotonServerLib.Common.CustomEventArgs;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -14,6 +15,7 @@ namespace PhotonServer
     public class Server : ApplicationBase
     {
         private readonly ILogger log = LogManager.GetCurrentClassLogger();
+
 
         protected override PeerBase CreatePeer(InitRequest initRequest)
         {

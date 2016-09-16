@@ -1,0 +1,4 @@
+E:\GoblinSurvival\Goblin Survival\Assets\Plugins\PhotonServerLib.Common.dll
+E:\GoblinSurvival\Goblin Survival\Assets\Plugins\PhotonServerLib.Common.pdb
+E:\Server\Server Control\Photon-OnPremise-Server-SDK_v4-0-29-11263\PhotonServer\PhotonServerLib.Common\obj\Debug\PhotonServerLib.Common.dll
+E:\Server\Server Control\Photon-OnPremise-Server-SDK_v4-0-29-11263\PhotonServer\PhotonServerLib.Common\obj\Debug\PhotonServerLib.Common.pdb

@@ -3,20 +3,25 @@ using System;
 using PhotonHostRuntimeInterfaces;
 using ExitGames.Logging;
 using System.Collections.Generic;
+using PhotonServerLib.Common;
+using PhotonServer.Operations;
 
 namespace PhotonServer
 {
-    class Client : ClientPeer
+    public class Client : ClientPeer
     {
         private readonly ILogger log = LogManager.GetCurrentClassLogger();
 
         public Client(InitRequest initRequest) : base(initRequest)
         {
-            log.Info("Player connection ip:" + initRequest.RemoteIP);
+            log.Debug("Client ip:" + initRequest.RemoteIP);
         }
+
+        public string CharacterName { get; set; }
 
         protected override void OnDisconnect(DisconnectReason reasonCode, string reasonDetail)
         {
+            World.Instance.RemoveClient(this);
             log.Debug("Disconnect");
         }
 
@@ -24,14 +29,29 @@ namespace PhotonServer
         {
             switch (operationRequest.OperationCode)
             {
-                case 1:
-                    if (operationRequest.Parameters.ContainsKey(1))
+                case (byte)OperationCode.Login:
+                    var loginRequest = new Login(Protocol, operationRequest);
+
+                    if (!loginRequest.IsValid)
                     {
-                        log.Debug("recive" + operationRequest.Parameters[1]);
-                        OperationResponse response = new OperationResponse(operationRequest.OperationCode);
-                        response.Parameters = new Dictionary<byte, object> { { 1, "response message" } };
-                        SendOperationResponse(response, sendParameters);
+                        SendOperationResponse(loginRequest.GetResponse(ErrorCode.InvalidParameters), sendParameters);
+                        return;
                     }
+
+                    CharacterName = loginRequest.CharacterName;
+
+                    if (World.Instance.IsContain(CharacterName))
+                    {
+                        SendOperationResponse(loginRequest.GetResponse(ErrorCode.NameIsExist), sendParameters);
+                        return;
+                    }
+
+                    World.Instance.AddClient(this);
+
+                    var response = new OperationResponse(operationRequest.OperationCode);
+                    SendOperationResponse(response, sendParameters);
+
+                    log.Info("User name: " + CharacterName);
                     break;
                 case 2:
                     if (operationRequest.Parameters.ContainsKey(1))
