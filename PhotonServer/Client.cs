@@ -18,12 +18,26 @@ namespace PhotonServer
             log.Debug("Client ip:" + initRequest.RemoteIP);
         }
 
-        public string CharacterName { get; set; }
+        public Vector3Net Position { get; private set; }
+        public string CharacterName { get; private set; }
 
         protected override void OnDisconnect(DisconnectReason reasonCode, string reasonDetail)
         {
             World.Instance.RemoveClient(this);
+            var sendParameters = new SendParameters();
+            sendParameters.Unreliable = true;
+            WorldExitHandler(sendParameters);
             log.Debug("Disconnect");
+        }
+
+        private void WorldExitHandler(SendParameters sendParameters)
+        {
+            var eventData = new EventData((byte)EventCode.WorldExit);
+            eventData.Parameters = new Dictionary<byte, object>()
+                    {
+                        { (byte)ParameterCode.CharacterName, CharacterName }
+                    };
+            eventData.SendTo(World.Instance.Clients, sendParameters);
         }
 
         protected override void OnOperationRequest(OperationRequest operationRequest, SendParameters sendParameters)
@@ -99,15 +113,74 @@ namespace PhotonServer
                 case (byte)OperationCode.GetRecentChatMessages:
                     var messageChat = Chat.Instance.GetRecentMessages();
                     messageChat.Reverse();
+
+                    if (messageChat.Count == 0)
+                        break;
+
                     var messagesChat = messageChat.Aggregate((i, j) =>i + "\r\n" + j);
                     var chatEventData = new EventData((byte)EventCode.ChatMessage);
                     chatEventData.Parameters = new Dictionary<byte, object>() { { (byte)ParameterCode.ChatMessage, messageChat } };
                     chatEventData.SendTo(new Client[] { this }, sendParameters);
                     break;
+
+                case (byte)OperationCode.Move:
+                    var moveRequest = new Move(Protocol, operationRequest);
+
+                    if (!moveRequest.IsValid)
+                    {
+                        SendOperationResponse(moveRequest.GetResponse(ErrorCode.InvalidParameters), sendParameters);
+                        return;
+                    }
+
+                    Position = new Vector3Net(moveRequest.X, moveRequest.Y, moveRequest.Z);
+                    var moveEventData = new EventData((byte)EventCode.Move);
+                    moveEventData.Parameters = new Dictionary<byte, object>()
+                    { 
+                        { (byte)ParameterCode.PosX, Position.X },
+                        { (byte)ParameterCode.PosY, Position.Y },
+                        { (byte)ParameterCode.PosZ, Position.Z },
+                        { (byte)ParameterCode.CharacterName, CharacterName }
+                    };
+                    moveEventData.SendTo(World.Instance.Clients, sendParameters);
+                    break;
+                case (byte)OperationCode.WorldEnter:
+                    var enterEventData = new EventData((byte)EventCode.WorldEnter);
+                    enterEventData.Parameters = new Dictionary<byte, object>()
+                    {
+                        { (byte)ParameterCode.PosX, Position.X },
+                        { (byte)ParameterCode.PosY, Position.Y },
+                        { (byte)ParameterCode.PosZ, Position.Z },
+                        { (byte)ParameterCode.CharacterName, CharacterName }
+                    };
+                    enterEventData.SendTo(World.Instance.Clients, sendParameters);
+                    break;
+                case (byte)OperationCode.WorldExit:
+                    WorldExitHandler(sendParameters);
+                    break;
+                case (byte)OperationCode.ListPlayers:
+                    ListPlayersHandler(sendParameters);
+                    break;
                 default:
                     log.Debug("Unknown OperationRequest received:" + operationRequest.OperationCode);
                     break;
             }
+        }
+
+        private void ListPlayersHandler(SendParameters sendParameters)
+        {
+            OperationResponse response = new OperationResponse((byte)OperationCode.ListPlayers);
+
+            var players = World.Instance.Clients;
+            var dicPlayers = new Dictionary<string, object[]>();
+
+            foreach (var p in players)
+            {
+                if (!p.CharacterName.Equals(CharacterName))
+                    dicPlayers.Add(p.CharacterName, new object[] { p.Position.X, p.Position.Y, p.Position.Z });
+            }
+
+            response.Parameters = new Dictionary<byte, object> { { (byte)ParameterCode.ListPlayers, dicPlayers } };
+            SendOperationResponse(response, sendParameters);
         }
     }
 }

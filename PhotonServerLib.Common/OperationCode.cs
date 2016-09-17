@@ -9,6 +9,10 @@ namespace PhotonServerLib.Common
     {
         Login,
         GetRecentChatMessages,
-        SendChatMessage
+        SendChatMessage,
+        Move,
+        WorldEnter,
+        WorldExit,
+        ListPlayers
     }
 }
