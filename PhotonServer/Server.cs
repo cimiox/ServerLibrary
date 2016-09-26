@@ -2,41 +2,45 @@
 using ExitGames.Logging.Log4Net;
 using log4net.Config;
 using Photon.SocketServer;
-using PhotonServerLib.Common.CustomEventArgs;
-using System;
-using System.Collections.Generic;
+using Photon.SocketServer.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PhotonServer
 {
     public class Server : ApplicationBase
     {
-        private readonly ILogger log = LogManager.GetCurrentClassLogger();
-
+        private static readonly ILogger Log = LogManager.GetCurrentClassLogger();
 
         protected override PeerBase CreatePeer(InitRequest initRequest)
         {
-            return new Client(initRequest);
+            return null;
         }
 
         protected override void Setup()
         {
-            var file = new FileInfo(Path.Combine(BinaryPath,"log4net.config"));
+            log4net.GlobalContext.Properties["Photon:ApplicationLogPath"] = Path.Combine(this.ApplicationRootPath, "Log");
+
+            string path = Path.Combine(this.BinaryPath, "log4net.config");
+            var file = new FileInfo(path);
             if (file.Exists)
             {
                 LogManager.SetLoggerFactory(Log4NetLoggerFactory.Instance);
                 XmlConfigurator.ConfigureAndWatch(file);
             }
+            Log.InfoFormat($"Created Application instance: type: {Instance.GetType()}");
+            Log.Debug("SERVER RUNNIG");
+            //TODO: Intialize();
+        }
 
-            log.Debug("SERVER READY");
+        private void Intialize()
+        {
+            //TODO: CounterPublisher.DefaultInstance.AddStaticCounterClass(typeof(Counter), true);
+
+            Protocol.AllowRawCustomValues = true;
         }
 
         protected override void TearDown()
         {
-            log.Debug("SERVER STOP");
         }
     }
 }
