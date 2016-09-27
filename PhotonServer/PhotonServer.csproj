@@ -59,6 +59,9 @@
     <Compile Include="Actor.cs" />
     <Compile Include="ActorCollection.cs" />
     <Compile Include="ActorGroup.cs" />
+    <Compile Include="Common\Property.cs" />
+    <Compile Include="Common\PropertyBag.cs" />
+    <Compile Include="Common\PropertyChangedEventArgs.cs" />
     <Compile Include="Diagnostic\Counter.cs" />
     <Compile Include="Diagnostic\CounterLogger.cs" />
     <Compile Include="Diagnostic\OperationLogging\LogEntry.cs" />
@@ -80,6 +83,7 @@
       <Name>PhotonServerLib.Common</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
