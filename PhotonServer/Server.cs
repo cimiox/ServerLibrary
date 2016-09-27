@@ -3,6 +3,7 @@ using ExitGames.Logging.Log4Net;
 using log4net.Config;
 using Photon.SocketServer;
 using Photon.SocketServer.Diagnostics;
+using PhotonServer.Diagnostic;
 using System.IO;
 
 namespace PhotonServer
@@ -29,12 +30,12 @@ namespace PhotonServer
             }
             Log.InfoFormat($"Created Application instance: type: {Instance.GetType()}");
             Log.Debug("SERVER RUNNIG");
-            //TODO: Intialize();
+            Intialize();
         }
 
         private void Intialize()
         {
-            //TODO: CounterPublisher.DefaultInstance.AddStaticCounterClass(typeof(Counter), true);
+            CounterPublisher.DefaultInstance.AddStaticCounterClass(typeof(Counter), "PhotonServer");
 
             Protocol.AllowRawCustomValues = true;
         }

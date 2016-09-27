@@ -59,6 +59,10 @@
     <Compile Include="Actor.cs" />
     <Compile Include="ActorCollection.cs" />
     <Compile Include="ActorGroup.cs" />
+    <Compile Include="Diagnostic\Counter.cs" />
+    <Compile Include="Diagnostic\CounterLogger.cs" />
+    <Compile Include="Diagnostic\OperationLogging\LogEntry.cs" />
+    <Compile Include="Diagnostic\OperationLogging\LogQueue.cs" />
     <Compile Include="PhotonPeer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Room.cs" />
